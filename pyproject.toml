@@ -8,6 +8,9 @@ packages = [{include = "maple_prob_scraper"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+requests = "^2.28.2"
+bs4 = "^0.0.1"
+pytest = "^7.2.0"
 
 
 [build-system]
