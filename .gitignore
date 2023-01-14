@@ -1,0 +1,7 @@
+**/__pycache__
+.coverage
+.vscode/
+dist/
+docs/_build/
+.stat*
+.sqlite.db
