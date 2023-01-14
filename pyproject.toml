@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "maple-prob-scraper"
+name = "maple_prob_scraper"
 version = "0.1.0"
 description = ""
 authors = ["Lechros <0onionion0@gmail.com>"]
