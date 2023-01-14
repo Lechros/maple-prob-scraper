@@ -1,17 +1,18 @@
+from typing import Optional
 from bs4 import BeautifulSoup
 
 from maple_prob_scraper.type.cube_detail import CubeDetail
 from maple_prob_scraper.request import get
 
 
-def fetch_prob(cube_id: int, grade: str, part: str, req_lev: int) -> dict[str, str]:
+def fetch_prob(cube_id: int, grade: str, part: str, req_lev: int) -> str:
     data = {
         'nCubeItemID': cube_id,
         'nGrade': grade,
         'nPartsType': part,
         'nReqLev': req_lev
     }
-    return get('/Guide/OtherProbability/cube/GetSearchProbList', data)
+    return get('/Guide/OtherProbability/cube/GetSearchProbList', data).text
 
 
 def parse_prob(html: str) -> dict[str, str]:
@@ -26,7 +27,7 @@ def parse_prob(html: str) -> dict[str, str]:
     return probs
 
 
-def get_cube_detail(cube_id: int, grade: str, part: str, req_lev: int, html: str | None) -> CubeDetail:
+def get_cube_detail(cube_id: int, grade: str, part: str, req_lev: int, html: Optional[str] = None) -> CubeDetail:
     if html is None:
         html = fetch_prob(cube_id, grade, part, req_lev)
 
@@ -34,7 +35,7 @@ def get_cube_detail(cube_id: int, grade: str, part: str, req_lev: int, html: str
     detail.cube_id = cube_id
     detail.cube_grade = grade
     detail.part_name = part
-    detail.req_lev = req_lev
+    detail.req_level = req_lev
     detail.probs = parse_prob(html)
 
     return detail
