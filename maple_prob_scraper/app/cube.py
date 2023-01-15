@@ -90,13 +90,22 @@ class CubeApp:
 
         result = {}
         for weights in weights_list:
+            same = True
+            rate = 0
             for key, weight in weights.items():
                 if key in result:
                     if result[key] != weight:
-                        raise ValueError("Different weights")
+                        same = False
+                        rate = result[key] / weight
+                        break
+            if not same:
+                for key, weight in weights.items():
+                    weights[key] = weight * rate
+
+            for key, weight in weights.items():
                 result[key] = weight
 
-        return result
+        return self.probs_to_weight(result)
 
     def convert_key_to_code(self, weights: dict[str, int]) -> dict[int, int]:
         selected = {}
